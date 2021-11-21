@@ -49,7 +49,7 @@ class Task():
     def check_final(self,node_obs):
         if self.nmoves != 0:
             return False
-        ##
+        ## count squares
         squares = self.count_squares(node_obs)
         if squares == self.nsquares:
             return True
@@ -57,7 +57,7 @@ class Task():
             return False
 
     def count_squares(self,node):
-        nsquares = np.sum(np.any(Smat@node.obs==4))
+        nsquares = np.sum(np.any(Smat.T@node.obs==4))
         return nsquares
 
 COUNT_SQUARE_IDX = [
