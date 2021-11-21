@@ -28,7 +28,10 @@ class Node():
     def __eq__(self,other):
         """ modify to take equivalent set into account
         """
-        obs_eq=np.any([np.all(self.obs == np.dot(t,other.obs)) for t in transformation_matrices])
+        obs_eq=np.any(
+            [np.all(self.obs == np.dot(t,other.obs)
+                ) for t in transformation_matrices]
+        )
         mr_eq = self.moves_remain == other.moves_remain
         return obs_eq & mr_eq
 
