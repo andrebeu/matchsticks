@@ -19,7 +19,7 @@ class Node()
             obs_child = obs
             obs_child[action] = 0
             child_moves_remain = self.moves_remain-1
-            if child_moves_remain >= 0: 
+            if child_moves_remain >= 0:
                 child_node = Node(obs_child,child_moves_remain)
                 self.children.append(child_node)
             else:
@@ -47,13 +47,13 @@ class Task():
     def check_final(self,node_obs):
         if self.nmoves != 0:
             return False
-        ## 
+        ##
         squares = self.count_squares(node_obs)
         if squares == self.nsquares:
             return True
         else:
             return False
-    
+
 
 COUNT_SQUARE_IDX = [
     [1,4,5,8], # ones in first row
@@ -84,3 +84,15 @@ REFLECTION_MATRIX_IDX = [
     22,15,8,1,
     18,11,4
 ]
+
+rotation_matrix=np.zeros((24,24))
+for i,j in enumerate(ROTATION_MATRIX_IDX):
+    rotation_matrix[i,j]=1
+
+reflection_matrix=np.zeros((24,24))
+for i,j in enumerate(REFLECTION_MATRIX_IDX):
+    reflection_matrix[i,j]=1
+
+R=rotation_matrix
+T=reflection_matrix
+transformation_matrices=[np.eye(24),R,R@R,R@R@R,T,R@T,R@R@T,R@R@R@T]
