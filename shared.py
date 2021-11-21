@@ -8,67 +8,79 @@ def form_obs(sticks):
     x[sticks] = 1
     return x
 
-class Node():
-    """ 
-    currently only implements valid action
-    """
-    def __init__(self,obs,is_final):
 
+class Node()
+    def __init__(self,obs,moves_remain):
+        self.moves_remain = moves_remain
         self.obs = obs
-        self.va = np.where(obs)[0] # valid actions
-        self.is_final = is_final
+        self.valid_actions = self.get_valid_actions()
+        self.children = []
+        for action in valid_actions:
+            obs_child = obs
+            obs_child[action] = 0
+            child_moves_remain = self.moves_remain-1
+            if child_moves_remain >= 0: 
+                child_node = Node(obs_child,child_moves_remain)
+                self.children.append(child_node)
+            else:
+                continue
 
-        ###
-        self.n_avail_modes=n_avail_moves
-        self.board=board
-        self.n_target_squares=n_target_squares
-        self.node_depth=#number of moves away from initial state
-        self.task_depth=#total number of moves in initial state
+    def __eq__(self,other):
+        obs_eq = np.all(self.obs == other.obs)
+        mr_eq = self.moves_remain == other.moves_remain
+        return obs_eq & mr_eq
 
-
-
-        #these fields are used by MCTS algorithm
-        self.n_visits=0
-        self.value=0
-        self.visited_children=[]
-
-
-        self.n_squares= #count the total number of squares in the board
-
-        #these will be populated as a consequence of calling a search algorithm
-        self.optimal_path=None
-        self.parent=None
+    def get_valid_actions(self):
+        if self.moves_remain==0:
+            return []
+        else:
+            return np.where(obs)[0]
 
 
 class Task():
-    """ 
-    current implementation constructs states on the go
-    maybe for more complex task might need to construct 
-    task space at initialization
-    """
-    def __init__(self,init_state_obs,final_states_obs,max_depth=2):
-        self.x0 = init_state_obs
-        self.xfL = final_states_obs
-        # construct state from obs
-        self.s0 = State(init_state_obs,is_final=False)
-        # self.sfL = [State(xf,is_final=True) for xf in final_states_obs] 
-        self.max_depth = max_depth
+    def __init__(self,init_obs,nsquares,nmoves):
+        self.nsquares = nsquares
+        self.nmoves = nmoves
+        self.head_node = Node(init_obs)
+        self.depth = len(np.where(init_obs)[0]) - len(np.where(final_obs)[0])
 
-    def check_final(self,xt):
-        return np.any([np.all(xt == x) for x in self.xfL])
+    def check_final(self,node_obs):
+        if self.nmoves != 0:
+            return False
+        ## 
+        squares = self.count_squares(node_obs)
+        if squares == self.nsquares:
+            return True
+        else:
+            return False
+    
 
-    def get_stp(self,state_t,action):
-        """ get next state
-        """
-        st = state_t
-        # check valid action
-        va = st.va
-        if action not in va:
-            assert False, 'A=%i not in vA %s'%(action,str(va))
-        # make xtp, and stp
-        xtp = copy(st.obs)
-        xtp[action] = 0
-        xtp_is_final = self.check_final(xtp)
-        stp = State(xtp,is_final=xtp_is_final)
-        return stp
-
+COUNT_SQUARE_IDX = [
+    [1,4,5,8], # ones in first row
+    [2,5,6,9], # ones in second row
+    [3,6,7,10],
+    [8,11,12,15],
+    [9,12,13,16],
+    [10,13,14,17],
+    [15,18,19,22],
+    [16,19,20,23],
+    [17,20,21,24]
+]
+ROTATION_MATRIX_IDX = [
+    18,11,4, # ones in first,second,third
+    22,15,8,1,
+    19,12,5,
+    23,16,9,2,
+    20,13,6,
+    24,17,10,3,
+    21,14,7
+]
+REFLECTION_MATRIX_IDX = [
+    21,14,7,
+    24,17,10,3,
+    20,13,6,
+    23,16,9,2,
+    19,12,5,
+    22,15,8,1,
+    18,11,4
+]
