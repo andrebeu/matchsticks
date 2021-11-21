@@ -9,7 +9,7 @@ def form_obs(sticks):
     return x
 
 
-class Node():
+class Node()
     def __init__(self,obs,moves_remain):
         self.moves_remain = moves_remain
         self.obs = obs
@@ -26,9 +26,7 @@ class Node():
                 continue
 
     def __eq__(self,other):
-        """ modify to take equivalent set into account
-        """
-        obs_eq = np.all(self.obs == other.obs)
+        obs_eq=np.any([np.all(self.obs == np.dot(t,other.obs)) for t in transformation_matrices])
         mr_eq = self.moves_remain == other.moves_remain
         return obs_eq & mr_eq
 
@@ -56,13 +54,10 @@ class Task():
         else:
             return False
 
-    def count_squares(self,node):
-        nsquares = np.sum(np.any(Smat@node.obs==4))
-        return nsquares
 
 COUNT_SQUARE_IDX = [
-    [1,4,5,8], 
-    [2,5,6,9], 
+    [1,4,5,8],
+    [2,5,6,9],
     [3,6,7,10],
     [8,11,12,15],
     [9,12,13,16],
@@ -71,9 +66,9 @@ COUNT_SQUARE_IDX = [
     [16,19,20,23],
     [17,20,21,24]
 ]
-Smat = COUNT_SQUARE_MATRIX = np.zeros([9,24])
+COUNT_SQUARE_MATRIX = np.zeros([9,24])
 for idx_row,idx_col in enumerate(COUNT_SQUARE_IDX):
-    COUNT_SQUARE_MATRIX[idx_row,np.array(idx_col)-1] = 1
+    M[idx_row,np.array(idx_col)-1] = 1
 
 ROTATION_MATRIX_IDX = [
     18,11,4, # ones in first,second,third
