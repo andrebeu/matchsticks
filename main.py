@@ -6,8 +6,6 @@ def form_obs(sticks):
     x[sticks] = 1
     return x
 
-
-
 class State():
     """ 
     currently only implements valid action
@@ -18,6 +16,11 @@ class State():
         self.is_final = is_final
 
 class Task():
+    """ 
+    current implementation constructs states on the go
+    maybe for more complex task might need to construct 
+    task space at initialization
+    """
     def __init__(self,init_state_obs,final_states_obs,max_depth=2):
         self.x0 = init_state_obs
         self.xfL = final_states_obs
@@ -45,12 +48,14 @@ class Task():
         return stp
 
 
-def BFSPlay(task):
+def BFSPlay(task,max_wsteps=5):
+    """ no memory implementation
+    """
     s0 = st = task.s0
     nsteps = 0
     wsteps = 0
     depth = 0
-    while depth<=task.max_depth:
+    while wsteps < max_wsteps: 
         wsteps +=1
         # check all nodes in current depth
         for at in st.va:
@@ -62,9 +67,10 @@ def BFSPlay(task):
         # if nothing found, step down
         st = stp
         depth += 1
-        # safety
-        if wsteps > 5:
-            assert False, 'possible infinite while'
+        # safety against 
+    return "no solution found"
 
+def DFSPlay(task):
 
+    return None
 
