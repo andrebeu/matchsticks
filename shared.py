@@ -91,11 +91,11 @@ REFLECTION_MATRIX_IDX = [
 
 rotation_matrix=np.zeros((24,24))
 for i,j in enumerate(ROTATION_MATRIX_IDX):
-    rotation_matrix[i,j]=1
+    rotation_matrix[i,j-1]=1
 
 reflection_matrix=np.zeros((24,24))
 for i,j in enumerate(REFLECTION_MATRIX_IDX):
-    reflection_matrix[i,j]=1
+    reflection_matrix[i,j-1]=1
 
 R=rotation_matrix
 T=reflection_matrix
