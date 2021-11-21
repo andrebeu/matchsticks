@@ -17,45 +17,26 @@ class State():
     def __init__(self):
         self.is_final = None
 
-class Agent():
-
-    def __init__(self):
-        None
-
-    def act(self,st):
-        valid_actions = st.valid_actions
-        ## use memory
-        ## randomly act
-        return st,stp
-
-    def get_stp(self,st,at,step_down):
-        """ """
 
 
-
-class BFSAgent(Agent):
-    def __init__(self):
-        None
-
-    def get_stp(self,st,at):
-        """ 
-        next state is same as current state
-        unless exhausted current layer
-        """
-        return get_stp
-
-class DFSAgent():
-    def __init__(self):
-        None
-
-    def get_stp(self,st,at):
-        """ 
-        next state is one layer down
-        and depends on action
-        """
-        stp = None # stp is one node down
-
-    
+def BFSPlay(task):
+    s0 = task.init_state
+    st = stp = s0
+    va = st.valid_actions
+    depth = st.depth
+    while depth<=task.max_depth:
+        depth = st.depth
+        # check all nodes in current depth
+        for at in va:
+            stp = st.get_stp(va)
+            nsteps +=1
+            if stp.is_final:
+                return nsteps
+        # if nothing found, step down
+        st = stp
+        # safety
+        if nsteps > 1000:
+            assert False
 
 
 
