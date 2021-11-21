@@ -8,14 +8,37 @@ def form_obs(sticks):
     x[sticks] = 1
     return x
 
-class State():
+class Node():
     """ 
     currently only implements valid action
     """
     def __init__(self,obs,is_final):
+
         self.obs = obs
         self.va = np.where(obs)[0] # valid actions
         self.is_final = is_final
+
+        ###
+        self.n_avail_modes=n_avail_moves
+        self.board=board
+        self.n_target_squares=n_target_squares
+        self.node_depth=#number of moves away from initial state
+        self.task_depth=#total number of moves in initial state
+
+
+
+        #these fields are used by MCTS algorithm
+        self.n_visits=0
+        self.value=0
+        self.visited_children=[]
+
+
+        self.n_squares= #count the total number of squares in the board
+
+        #these will be populated as a consequence of calling a search algorithm
+        self.optimal_path=None
+        self.parent=None
+
 
 class Task():
     """ 
