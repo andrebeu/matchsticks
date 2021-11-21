@@ -56,8 +56,8 @@ class Task():
 
 
 COUNT_SQUARE_IDX = [
-    [1,4,5,8], # ones in first row
-    [2,5,6,9], # ones in second row
+    [1,4,5,8], 
+    [2,5,6,9], 
     [3,6,7,10],
     [8,11,12,15],
     [9,12,13,16],
