@@ -28,7 +28,7 @@ class Node():
     def __eq__(self,other):
         """ modify to take equivalent set into account
         """
-        obs_eq = np.all(self.obs == other.obs)
+        obs_eq=np.any([np.all(self.obs == np.dot(t,other.obs)) for t in transformation_matrices])
         mr_eq = self.moves_remain == other.moves_remain
         return obs_eq & mr_eq
 
@@ -61,8 +61,8 @@ class Task():
         return nsquares
 
 COUNT_SQUARE_IDX = [
-    [1,4,5,8], 
-    [2,5,6,9], 
+    [1,4,5,8],
+    [2,5,6,9],
     [3,6,7,10],
     [8,11,12,15],
     [9,12,13,16],
