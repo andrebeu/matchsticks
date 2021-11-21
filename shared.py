@@ -56,9 +56,6 @@ class Task():
         else:
             return False
 
-    def count_squares(self,node):
-        nsquares = np.sum(np.any(Smat.T@node.obs==4))
-        return nsquares
 
 COUNT_SQUARE_IDX = [
     [1,4,5,8], 
