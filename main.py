@@ -1,5 +1,6 @@
 import numpy as np
 from copy import copy as copy
+import random
 
 def form_obs(sticks):
     x = np.zeros(24)
@@ -48,8 +49,10 @@ class Task():
         return stp
 
 
-def BFSPlay(task,max_wsteps=5):
-    """ no memory implementation
+def BFSplay(task,max_wsteps=5):
+    """ 
+    BFS with no memory implementation
+    max_wsteps (max while steps) is just a safety break
     """
     s0 = st = task.s0
     nsteps = 0
@@ -58,9 +61,39 @@ def BFSPlay(task,max_wsteps=5):
     while wsteps < max_wsteps: 
         wsteps +=1
         # check all nodes in current depth
+        va = copy(st.va)
+        random.shuffle(va)
+        for at in va:
+            # print('a%i'%nsteps,at)
+            stp = task.get_stp(st,at)
+            nsteps +=1
+            if stp.is_final:
+                return nsteps
+        # if nothing found, step down
+        st = stp
+        depth += 1
+    return "no solution found"
+
+def DFSPlay(task,max_wsteps=5):
+    s0 = st = task.s0
+    nsteps = 0
+    wsteps = 0
+    depth = 0
+    # 
+    va = copy(st.va)
+
+    at = va.pop()
+    stp = task.get_stp(st,at)
+
+
+
+
+    while wsteps < max_wsteps:
+        wsteps +=1
+        # check all nodes in current depth
         for at in st.va:
             print('a%i'%nsteps,at)
-            stp = task.get_stp(st,at)
+            
             nsteps +=1
             if stp.is_final:
                 return nsteps
@@ -69,8 +102,4 @@ def BFSPlay(task,max_wsteps=5):
         depth += 1
         # safety against 
     return "no solution found"
-
-def DFSPlay(task):
-
-    return None
 
