@@ -12,11 +12,12 @@ def form_obs(sticks):
 class Node():
     def __init__(self,obs,moves_remain):
         self.moves_remain = moves_remain
+        print('NODE',obs)
         self.obs = obs
         self.valid_actions = self.get_valid_actions()
         self.children = []
         for action in self.valid_actions:
-            obs_child = obs
+            obs_child = copy(obs)
             obs_child[action] = 0
             child_moves_remain = self.moves_remain-1
             if child_moves_remain >= 0:
@@ -46,6 +47,7 @@ class Task():
     def __init__(self,init_obs,nsquares,nmoves):
         self.nsquares = nsquares
         self.nmoves = nmoves
+        print('TASK',init_obs)
         self.head_node = Node(init_obs,nmoves)
         # self.depth = len(np.where(init_obs)[0]) - len(np.where(final_obs)[0])
 
