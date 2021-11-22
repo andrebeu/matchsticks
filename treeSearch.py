@@ -9,7 +9,7 @@ def treeSearch(task,BFS=True):
     deq = deque()
     deq.append(nodet)
     # deq.append(nodet)
-    deq.extend(nodet.children)
+    # deq.extend(nodet.children)
     nitr = 0
     while len(deq):
         nitr += 1
@@ -23,8 +23,8 @@ def treeSearch(task,BFS=True):
         if task.check_final(nodet):
             return nitr
         ## extend with children
+        random.shuffle(nodet.children)
         deq.extend(nodet.children)
-        print('deqlen',len(deq))
-    return "no solution"
+    return -99
 
 
