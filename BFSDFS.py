@@ -2,6 +2,10 @@ import numpy as np
 from copy import copy as copy
 import random
 
+
+TreeSearch(task)
+
+
 def BFSplay(task,max_wsteps=5):
     """ 
     BFS with no memory implementation

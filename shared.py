@@ -15,7 +15,7 @@ class Node():
         self.obs = obs
         self.valid_actions = self.get_valid_actions()
         self.children = []
-        for action in valid_actions:
+        for action in self.valid_actions:
             obs_child = obs
             obs_child[action] = 0
             child_moves_remain = self.moves_remain-1
@@ -39,15 +39,15 @@ class Node():
         if self.moves_remain==0:
             return []
         else:
-            return np.where(obs)[0]
+            return np.where(self.obs)[0]
 
 
 class Task():
     def __init__(self,init_obs,nsquares,nmoves):
         self.nsquares = nsquares
         self.nmoves = nmoves
-        self.head_node = Node(init_obs)
-        self.depth = len(np.where(init_obs)[0]) - len(np.where(final_obs)[0])
+        self.head_node = Node(init_obs,nmoves)
+        # self.depth = len(np.where(init_obs)[0]) - len(np.where(final_obs)[0])
 
     def check_final(self,node_obs):
         if self.nmoves != 0:
