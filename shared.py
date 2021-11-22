@@ -10,17 +10,18 @@ def form_obs(sticks):
 
 
 class Node():
-    def __init__(self,obs,moves_remain):
+    def __init__(self,obs,moves_remain,parent=None):
         self.moves_remain = moves_remain
         self.obs = obs
         self.valid_actions = self.get_valid_actions()
         self.children = []
+        self.parent = parent
         for action in self.valid_actions:
             obs_child = copy(obs)
             obs_child[action] = 0
             child_moves_remain = self.moves_remain-1
             if child_moves_remain >= 0:
-                child_node = Node(obs_child,child_moves_remain)
+                child_node = Node(obs_child,child_moves_remain,parent=self)
                 self.children.append(child_node)
             else:
                 continue
