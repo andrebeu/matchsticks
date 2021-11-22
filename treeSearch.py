@@ -6,7 +6,8 @@ from collections import deque
 
 def treeSearch(task,BFS=True):
     nodet = task.head_node
-    deq = deque(nodet)
+    deq = deque()
+    # deq.append(nodet)
     deq.extend(nodet.children)
     nitr = 0
     while deq:

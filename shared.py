@@ -51,11 +51,12 @@ class Task():
         self.head_node = Node(init_obs,nmoves)
         # self.depth = len(np.where(init_obs)[0]) - len(np.where(final_obs)[0])
 
-    def check_final(self,node_obs):
-        if self.nmoves != 0:
+    def check_final(self,node):
+        print('check')
+        if self.node.moves_remain != 0:
             return False
         ## count squares
-        squares = self.count_squares(node_obs)
+        squares = self.count_squares(node.obs)
         if squares == self.nsquares:
             return True
         else:
