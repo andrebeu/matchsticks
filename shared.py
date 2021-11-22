@@ -12,7 +12,6 @@ def form_obs(sticks):
 class Node():
     def __init__(self,obs,moves_remain):
         self.moves_remain = moves_remain
-        print('NODE',obs)
         self.obs = obs
         self.valid_actions = self.get_valid_actions()
         self.children = []
@@ -37,33 +36,28 @@ class Node():
         return obs_eq & mr_eq
 
     def get_valid_actions(self):
-        if self.moves_remain==0:
-            return []
-        else:
-            return np.where(self.obs)[0]
+        return np.where(self.obs)[0]
 
 
 class Task():
     def __init__(self,init_obs,nsquares,nmoves):
         self.nsquares = nsquares
         self.nmoves = nmoves
-        print('TASK',init_obs)
         self.head_node = Node(init_obs,nmoves)
         # self.depth = len(np.where(init_obs)[0]) - len(np.where(final_obs)[0])
 
     def check_final(self,node):
-        print('check')
-        if self.node.moves_remain != 0:
+        if node.moves_remain != 0:
             return False
         ## count squares
-        squares = self.count_squares(node.obs)
+        squares = self.count_squares(node)
         if squares == self.nsquares:
             return True
         else:
             return False
 
     def count_squares(self,node):
-        nsquares = np.sum(Smat.T@node.obs==4)
+        nsquares = np.sum(Smat@node.obs==4)
         return nsquares
 
 COUNT_SQUARE_IDX = [

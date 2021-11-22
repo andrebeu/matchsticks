@@ -7,22 +7,24 @@ from collections import deque
 def treeSearch(task,BFS=True):
     nodet = task.head_node
     deq = deque()
+    deq.append(nodet)
     # deq.append(nodet)
     deq.extend(nodet.children)
     nitr = 0
-    while deq:
+    while len(deq):
         nitr += 1
-        print(nodet.obs)
-        ## eval node
-        if task.check_final(nodet.obs):
-            return nitr
         ## expand tree
         if BFS:
             nodet = deq.popleft()
         else:
-            nodet = deq.pop()        
+            nodet = deq.pop()  
+        # print(np.where(nodet.obs))
+        ## eval node
+        if task.check_final(nodet):
+            return nitr
         ## extend with children
         deq.extend(nodet.children)
+        print('deqlen',len(deq))
     return "no solution"
 
 
