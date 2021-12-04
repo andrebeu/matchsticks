@@ -23,6 +23,14 @@ OUTER_BOARD[[7,8,9,10,11,12,13,14,15,16]]=1
 MIDDLE_BOARD=np.zeros(24)
 MIDDLE_BOARD[[7,8,9,10,11,12,13,14,15,16]]=1
 
+## BIAS BOARDS
+BIAS_BOARD_LOOSE=np.zeros(24)
+BIAS_BOARD_LOOSE[[7,9,10,11,12,13,14,16, 4]]=1
+BIAS_BOARD_JOIN=np.zeros(24)
+BIAS_BOARD_JOIN[[7,9,10,11,12,13,14,16, 8]]=1
+BIAS_BOARD_FINAL=np.zeros(24)
+BIAS_BOARD_FINAL[[7,9,10,11,12,13,14,16, 4,8]]=1
+
 def generate_board(tactic_name,n_extra_sticks,contiguous=True):
     #tactic name should be one of loose_end,join,outer,middle
     #n_extra_sticks: number of randomly=placed sticks to add to board
@@ -42,6 +50,12 @@ def generate_board(tactic_name,n_extra_sticks,contiguous=True):
         obs0,n_squares,n_moves=OUTER_BOARD,2,n_extra_sticks+1
     elif tactic_name=='middle':
         obs0,n_squares,n_moves=MIDDLE_BOARD,1,n_extra_sticks+1
+    elif tactic_name=='bias_join':
+        obs0,n_squares,n_moves=BIAS_BOARD_JOIN,2,n_extra_sticks+1
+    elif tactic_name=='bias_loose':
+        obs0,n_squares,n_moves=BIAS_BOARD_LOOSE,2,n_extra_sticks+1
+    elif tactic_name=='bias_final':
+        obs0,n_squares,n_moves=BIAS_BOARD_FINAL,2,n_extra_sticks+1
     else:
         raise ValueError('invalid tactic name')
     obs=np.copy(obs0)

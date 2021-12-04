@@ -7,9 +7,11 @@ V = False
 
 def treeSearch(taskL,BFS=True,memory=False):
     if V: print('\nBFS=',BFS,'mem=',memory)
-    sol_nodes = []
+    memory = []
     sol_times = []
     sol_mode = []
+    sol_nodes = []
+
     for task in taskL:
         if V: print('task:')
         nitr = 0
@@ -24,11 +26,12 @@ def treeSearch(taskL,BFS=True,memory=False):
             if V: print(nodet.valid_actions)
             ## eval if node is final
             if task.check_final(nodet):
-                sol_nodes.append(nodet)
+                memory.append(nodet)
                 if type(nodet.parent) != type(None):
-                    sol_nodes.append(nodet.parent)
+                    memory.append(nodet.parent)
                 # record RT
                 sol_times.append(nitr)
+                sol_nodes.append(nodet)
                 # solution mode no memory
                 sol_mode.append(0)
                 if V: print('sol by search')
@@ -36,13 +39,14 @@ def treeSearch(taskL,BFS=True,memory=False):
             ## check memory
             elif memory:
                 sol_in_memory = 0
-                for sol_node in sol_nodes:
+                for sol_node in memory:
                     # check tree against memory solutions
                     # if sol_node in deq:
-                    # print(sol_nodes)
+                    # print(memory)
                     if sol_node == nodet:
                         # record RT
                         sol_times.append(nitr+1)
+                        sol_nodes.append(nodet)
                         sol_in_memory = True
                         break # from memory for
                 if sol_in_memory:
@@ -54,5 +58,5 @@ def treeSearch(taskL,BFS=True,memory=False):
             random.shuffle(nodet.children)
             deq.extend(nodet.children)
     if V: print('cost=',sol_times)
-    return sol_times,sol_mode
+    return {'rt':sol_times,'smode':sol_mode,'solution_nodes':sol_nodes}
 

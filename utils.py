@@ -35,13 +35,13 @@ STICK_TO_VERTEX_IDS=[
 vertex_positions=np.vstack((list(range(4))*4,[3]*4+[2]*4+[1]*4+[0]*4)).T
 
 
-def draw_board(obs):
+def draw_board(obs,ax):
     #first draw all verticies
-    plt.scatter(*vertex_positions.T,c='black')
+    ax.scatter(*vertex_positions.T,c='black')
     for i in np.where(obs)[0]:
         #indices of vertices connected by the stick, *ordered starting from 1*
         a,b=STICK_TO_VERTEX_IDS[i]
         X=np.vstack((vertex_positions[a-1],vertex_positions[b-1]))
-        plt.plot(*X.T,c='black')
+        ax.plot(*X.T,c='black')
 
 
