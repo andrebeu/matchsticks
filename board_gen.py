@@ -3,23 +3,23 @@ import shared
 import utils
 import random
 
-#remove 1 piece and 0 squares
-#1 target square
+# remove 1 piece and 0 squares
+# 1 target square
 LOOSE_END_BOARD=np.zeros(24)
 LOOSE_END_BOARD[[5,8,11,12,15]]=1
 
-#remove 1 piece and 0 squares
-#2 target square
+# remove 1 piece and 0 squares
+# 2 target square
 JOIN_BOARD=np.zeros(24)
 JOIN_BOARD[[7,8,9,10,11,12,13,14,16]]=1
 
-#remove 1 piece and 1 square
-#2 target squares
+# remove 1 piece and 1 square
+# 2 target squares
 OUTER_BOARD=np.zeros(24)
 OUTER_BOARD[[7,8,9,10,11,12,13,14,15,16]]=1
 
-#remove 1 piece and 2 squares
-#1 target square
+# remove 1 piece and 2 squares
+# 1 target square
 MIDDLE_BOARD=np.zeros(24)
 MIDDLE_BOARD[[7,8,9,10,11,12,13,14,15,16]]=1
 
