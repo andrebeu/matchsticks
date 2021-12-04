@@ -25,6 +25,8 @@ def treeSearch(taskL,BFS=True,memory=False):
             ## eval if node is final
             if task.check_final(nodet):
                 sol_nodes.append(nodet)
+                if type(nodet.parent) != type(None):
+                    sol_nodes.append(nodet.parent)
                 # record RT
                 sol_times.append(nitr)
                 # solution mode no memory
@@ -36,7 +38,9 @@ def treeSearch(taskL,BFS=True,memory=False):
                 sol_in_memory = 0
                 for sol_node in sol_nodes:
                     # check tree against memory solutions
-                    if sol_node in deq:
+                    # if sol_node in deq:
+                    # print(sol_nodes)
+                    if sol_node == nodet:
                         # record RT
                         sol_times.append(nitr+1)
                         sol_in_memory = True
