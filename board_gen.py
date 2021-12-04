@@ -9,7 +9,7 @@ LOOSE_END_BOARD=np.zeros(24)
 LOOSE_END_BOARD[[5,8,11,12,15]]=1
 
 #remove 1 piece and 0 squares
-#1 target square
+#2 target square
 JOIN_BOARD=np.zeros(24)
 JOIN_BOARD[[7,8,9,10,11,12,13,14,16]]=1
 
@@ -37,7 +37,7 @@ def generate_board(tactic_name,n_extra_sticks,contiguous=True):
     if tactic_name=='loose_end':
         obs0,n_squares,n_moves=LOOSE_END_BOARD,1,n_extra_sticks+1
     elif tactic_name=='join':
-        obs0,n_squares,n_moves=JOIN_BOARD,1,n_extra_sticks+1
+        obs0,n_squares,n_moves=JOIN_BOARD,2,n_extra_sticks+1
     elif tactic_name=='outer':
         obs0,n_squares,n_moves=OUTER_BOARD,2,n_extra_sticks+1
     elif tactic_name=='middle':
