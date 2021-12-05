@@ -35,7 +35,7 @@ STICK_TO_VERTEX_IDS=[
 vertex_positions=np.vstack((list(range(4))*4,[3]*4+[2]*4+[1]*4+[0]*4)).T
 
 
-def draw_board(obs,ax):
+def draw_board(ax,obs):
     #first draw all verticies
     ax.scatter(*vertex_positions.T,c='black')
     for i in np.where(obs)[0]:
