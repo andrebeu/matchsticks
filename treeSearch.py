@@ -3,9 +3,9 @@ from copy import copy as copy
 import random
 from collections import deque
 
-V = False
+V = True
 
-def treeSearch(taskL,BFS=True,memory=False):
+def treeSearch(taskL,BFS=True,memory_flag=False):
     if V: print('\nBFS=',BFS,'mem=',memory)
     memory = []
     sol_times = []
@@ -37,7 +37,7 @@ def treeSearch(taskL,BFS=True,memory=False):
                 if V: print('sol by search')
                 break
             ## check memory
-            elif memory:
+            elif memory_flag:
                 sol_in_memory = 0
                 for sol_node in memory:
                     # check tree against memory solutions
