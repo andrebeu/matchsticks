@@ -27,8 +27,8 @@ class MCTSNode(Node):
 
         visited_children=[c for c in self.children if c.N>0]
         if len(visited_children)==0:
-            return []
-        argmax_ucb=np.argmax([UCB_value(c.v,c.N,self) for c in visited_children])
+            return [self]
+        argmax_ucb=np.argmax([UCB_value(c.v,c.N,self.N) for c in visited_children])
         return [self]+visited_children[argmax_ucb].expand_path()
 
 
@@ -65,14 +65,14 @@ def MCTS_Step(task):
 
             ucb_vals=[UCB_value(x.v,x.N,cur.N) for x in cur.children]
 
-            cur=ucb_vals[np.argmax(ucb_vals)]
+            cur=cur.children[np.argmax(ucb_vals)]
             path.append(cur)
             unvisited_children=[x for x in cur.children if x.N==0]
 
        #step 1.5. current node either is a terminal state (no children), or else it has an unvisited child
       if len(cur.children)==0:
             #value is based on whether the node is a valid end state or not
-            v=1.0*task.check_final(cur.obs)
+            v=1.0*task.check_final(cur)
             MCTS_backup(v,path)
             return len(path),v
 
@@ -118,10 +118,10 @@ def MCTS(task, max_iters=1000,memory=None):
 
       for n_iters in range(1,max_iters+1):
             found_path_len,v=MCTS_Step(task)
-            if v>0:
+            if task.check_final(task.head_node.expand_path()[-1]):
                   return n_iters
 
-      return -99,0
+      return -99
 def update_memory(task,memory):
     #for each node on the optimal path from head_node,
     #add those nodes to memory, or update their values if they are already there
